@@ -8,7 +8,7 @@ logging.basicConfig(filename='diary log', level=logging.INFO,
 
 print(" ")
 print("⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔")
-print("Welcome to your diary! :)")
+print("Welcome to your diary!!! :)")
 print("Type 'BEGIN' to start writing.", end= " ")
 print("Type 'END' to stop writing.")
 print(" ")
