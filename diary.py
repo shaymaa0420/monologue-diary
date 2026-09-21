@@ -1,50 +1,80 @@
-#Diary!!! <3
+#Personal diary program.
+#Allows users to write entries.
+#Entries are dated and saved to a log file.
 
 import datetime as dt
-import logging
-logging.basicConfig(filename='diary log', level=logging.INFO,
-                    format='%(asctime)s - %(message)s',
-                    datefmt='%m/%d/%y %H:%M:%S')
+import tkinter as tk
+from tkinter import font
+from PIL import Image, ImageTk
 
-print(" ")
-print("⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔")
-print("Welcome to your diary!!! :)")
-print("Type 'BEGIN' to start writing.", end= " ")
-print("Type 'END' to stop writing.")
-print(" ")
-diary_status = input("Enter your choice: ")
-print(" ")
+#Saving diary entries to a log file with timestamp.
+def save_entry_to_log(entry_text):
+    timestamp = dt.datetime.now().strftime('%m/%d/%y %H:%M')
+    with open('diary log', 'a', encoding='utf-8') as diary_file:
+        diary_file.write(f'{timestamp} - {entry_text}\n')
 
-if diary_status == "END":
-    print()
-if diary_status == "BEGIN":
-    print(" ")
-    print("-> Type entry here: ")
-    entry = input()
-    logging.info("Entry saved: %s", entry)
-    current_time = dt.datetime.now().strftime('%m/%d/%y %H:%M')
-    print("-> Entry saved!")
-    print("-> " + str(current_time))
-    print(" ")
-    print("[Type 'END' to stop writing. Type 'BEGIN' to write another entry.]")
-    print(" ")
-    diary_status = input(" ")
+#Creating a new window for diary entry.
+def open_entry_window(root):
+    entry_window = tk.Toplevel(root)
+    entry_window.title('Diary Entry')
+    entry_window.configure(background='#FFE6EA')
+    entry_window.geometry('450x500+500+200')
 
-while diary_status != "END":
-    print(" ")
-    print("-> Type entry here: ")
-    print(" ")
-    entry = input()
-    logging.info("Entry saved: %s", entry)
-    current_time = dt.datetime.now().strftime('%m/%d/%y %H:%M')
-    print("-> Entry saved!")
-    print("-> " + str(current_time))
-    print(" ")
-    print("[Type 'END' to stop writing. Type 'BEGIN' to write another entry.]")
-    print(" ")
-    diary_status = input(" ")
-else:
-    print(" ")
-    print("-> Thank you! Goodbye!")
-    print("⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔")
-    print(" ")
+    custom_font = font.Font(family='Helvetica', size=20, weight='bold')
+    tk.Label(entry_window, text='⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔', font=custom_font).pack(pady=(10, 0))
+    tk.Label(entry_window, text='Start writing here!', font=custom_font).pack(pady=10)
+
+    diary_entry = tk.Text(entry_window, height=12, width=30, font=('Helvetica', 14))
+    diary_entry.pack(padx=20, pady=10)
+
+    status_label = tk.Label(entry_window, text='', fg='green', font=('Helvetica', 12, 'bold'))
+    status_label.pack()
+
+    #Function to save the diary entry when the button is clicked.
+    def save_entry():
+        text = diary_entry.get('1.0', 'end-1c').strip()
+        if not text:
+            status_label.config(text='Please type something first.', fg='red')
+            return
+
+        save_entry_to_log(text)
+        status_label.config(text='Entry saved!', fg='green')
+        status_label.after(3000, status_label.destroy)
+
+    tk.Button(entry_window, text='Save Entry', font=('Helvetica', 14, 'bold'), command=save_entry, bg='#F9BCC5', width=20, height=2).pack(pady=10)
+
+#Main function to create the main window of the diary application.
+def main():
+    root = tk.Tk()
+    root.title('My Diary')
+    root.configure(background='#FFE6EA')
+    root.minsize(width=1000, height=1000)
+    root.geometry('400x400+200+200')
+
+    custom_font = font.Font(family='Helvetica', size=20, weight='bold')
+
+    tk.Label(root, text='⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔', font=custom_font).pack()
+    tk.Label(root, text='Welcome to your diary!', font=custom_font).pack()
+    tk.Label(root, text='Made by Shaymaa M.', font=custom_font).pack()
+    tk.Label(root, text=' ').pack()
+    tk.Label(root, text=' ').pack()
+    tk.Label(root, text=' ').pack()
+
+    img = Image.open('deardiarycute.png')
+    timg = img.resize((400, 400), Image.Resampling.LANCZOS)
+    photo = ImageTk.PhotoImage(timg)
+    tk.Label(root, image=photo).pack()
+    tk.Label(root, text=' ').pack()
+    tk.Label(root, text='Image Credit: https://pin.it/4NwBkQqpN', font=custom_font).pack()
+
+    tk.Label(root, text=' ').pack()
+    tk.Label(root, text=' ').pack()
+    tk.Label(root, text=' ').pack()
+    button = tk.Button(root, text='Start Writing', font=custom_font, command=lambda: open_entry_window(root), bg='#F9BCC5', width=20, height=2)
+    button.pack()
+
+    root.mainloop()
+
+#Entry point of the program.
+if __name__ == '__main__':
+    main()
