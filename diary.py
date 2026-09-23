@@ -21,13 +21,27 @@ def open_entry_window(root):
     entry_window.geometry('450x500+500+200')
 
     custom_font = font.Font(family='Helvetica', size=20, weight='bold')
-    tk.Label(entry_window, text='⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔', font=custom_font).pack(pady=(10, 0))
-    tk.Label(entry_window, text='Start writing here!', font=custom_font).pack(pady=10)
+    title_style = {'bg': '#FFE6EA', 'fg': 'black', 'highlightthickness': 0, 'bd': 0}
+    tk.Label(entry_window, text='⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔', font=custom_font, **title_style).pack(pady=(10, 0))
+    tk.Label(entry_window, text='Start writing here!', font=custom_font, **title_style).pack(pady=10)
 
-    diary_entry = tk.Text(entry_window, height=12, width=30, font=('Helvetica', 14))
+    diary_entry = tk.Text(
+        entry_window,
+        height=12,
+        width=30,
+        font=('Helvetica', 14),
+        bg='#FFF7F8',
+        fg='black',
+        selectbackground='#FFF7F8',
+        selectforeground='black',
+        highlightthickness=0,
+        highlightbackground='#FFF7F8',
+        highlightcolor='#FFF7F8',
+        insertbackground='black'
+    )
     diary_entry.pack(padx=20, pady=10)
 
-    status_label = tk.Label(entry_window, text='', fg='green', font=('Helvetica', 12, 'bold'))
+    status_label = tk.Label(entry_window, text='', fg='green', font=('Helvetica', 12, 'bold'), bg='#FFE6EA', highlightthickness=0, bd=0)
     status_label.pack()
 
     #Function to save the diary entry when the button is clicked.
@@ -52,24 +66,25 @@ def main():
     root.geometry('400x400+200+200')
 
     custom_font = font.Font(family='Helvetica', size=20, weight='bold')
+    title_style = {'bg': '#FFE6EA', 'fg': 'black', 'highlightthickness': 0, 'bd': 0}
 
-    tk.Label(root, text='⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔', font=custom_font).pack()
-    tk.Label(root, text='Welcome to your diary!', font=custom_font).pack()
-    tk.Label(root, text='Made by Shaymaa M.', font=custom_font).pack()
-    tk.Label(root, text=' ').pack()
-    tk.Label(root, text=' ').pack()
-    tk.Label(root, text=' ').pack()
+    tk.Label(root, text='⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔⏔', font=custom_font, **title_style).pack()
+    tk.Label(root, text='Welcome to your diary!', font=custom_font, **title_style).pack()
+    tk.Label(root, text='Made by Shaymaa M.', font=custom_font, **title_style).pack()
+    tk.Label(root, text=' ', **title_style).pack()
+    tk.Label(root, text=' ', **title_style).pack()
+    tk.Label(root, text=' ', **title_style).pack()
 
     img = Image.open('deardiarycute.png')
     timg = img.resize((400, 400), Image.Resampling.LANCZOS)
     photo = ImageTk.PhotoImage(timg)
-    tk.Label(root, image=photo).pack()
-    tk.Label(root, text=' ').pack()
-    tk.Label(root, text='Image Credit: https://pin.it/4NwBkQqpN', font=custom_font).pack()
+    tk.Label(root, image=photo, bg='#FFE6EA', highlightthickness=0, bd=0).pack()
+    tk.Label(root, text=' ', **title_style).pack()
+    tk.Label(root, text='Image Credit: https://pin.it/4NwBkQqpN', font=custom_font, **title_style).pack()
 
-    tk.Label(root, text=' ').pack()
-    tk.Label(root, text=' ').pack()
-    tk.Label(root, text=' ').pack()
+    tk.Label(root, text=' ', **title_style).pack()
+    tk.Label(root, text=' ', **title_style).pack()
+    tk.Label(root, text=' ', **title_style).pack()
     button = tk.Button(root, text='Start Writing', font=custom_font, command=lambda: open_entry_window(root), bg='#F9BCC5', width=20, height=2)
     button.pack()
 
